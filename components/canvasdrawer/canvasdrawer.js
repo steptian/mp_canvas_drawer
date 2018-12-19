@@ -128,20 +128,50 @@ Component({
     drawImage (params) {
       this.ctx.save()
       const { url, top = 0, left = 0, width = 0, height = 0, borderRadius = 0, deg = 0 } = params
-      // if (borderRadius) {
-      //   this.ctx.beginPath()
-      //   this.ctx.arc(left + borderRadius, top + borderRadius, borderRadius, 0, 2 * Math.PI)
-      //   this.ctx.clip()
-      //   this.ctx.drawImage(url, left, top, width, height)
-      // } else {
-      if (deg !== 0) {
-        this.ctx.translate(left + width/2, top + height/2)
-        this.ctx.rotate(deg * Math.PI / 180)
-        this.ctx.drawImage(url, -width/2, -height/2, width, height)
-      } else {
+      if (borderRadius) {
+        this.ctx.beginPath()
+        // this.ctx.arc(left + borderRadius, top + borderRadius, borderRadius, 0, 2 * Math.PI)
+        // this.ctx.clip()
+        var x = left,
+          y = top,
+          r = borderRadius,
+          w = width,
+          h = height
+        this.ctx.arc(x + r, y + r, r, Math.PI, Math.PI * 1.5)
+        // border-top
+        this.ctx.moveTo(x + r, y)
+        this.ctx.lineTo(x + w - r, y)
+        this.ctx.lineTo(x + w, y + r)
+        // 右上角
+        this.ctx.arc(x + w - r, y + r, r, Math.PI * 1.5, Math.PI * 2)
+        // border-right
+        this.ctx.lineTo(x + w, y + h - r)
+        this.ctx.lineTo(x + w - r, y + h)
+        // 右下角
+        this.ctx.arc(x + w - r, y + h - r, r, 0, Math.PI * 0.5)
+        // border-bottom
+        this.ctx.lineTo(x + r, y + h)
+        this.ctx.lineTo(x, y + h - r)
+        // 左下角
+        this.ctx.arc(x + r, y + h - r, r, Math.PI * 0.5, Math.PI)
+        // border-left
+        this.ctx.lineTo(x, y + r)
+        this.ctx.lineTo(x + r, y)
+        // 这里是使用 fill 还是 stroke都可以，二选一即可，但是需要与上面对应
+        this.ctx.fill()
+        this.ctx.closePath()
+        // 剪切
+        this.ctx.clip()
         this.ctx.drawImage(url, left, top, width, height)
+      } else {
+        if (deg !== 0) {
+          this.ctx.translate(left + width / 2, top + height / 2)
+          this.ctx.rotate(deg * Math.PI / 180)
+          this.ctx.drawImage(url, -width / 2, -height / 2, width, height)
+        } else {
+          this.ctx.drawImage(url, left, top, width, height)
+        }
       }
-      // }
       this.ctx.restore()
     },
     drawText (params) {
