@@ -293,7 +293,8 @@ height | 要画多高 | 0 |
 - [x] 图片缓存机制 - 加快相同图片绘制的速度
 - [x] 增加 `measureText` 方法对于低版本的提示
 - [x] 安卓下文本绘制稳定性修复
-- [x] 增加圆角属性 `borderRadius`、`border` 支持
+- [x] 增加圆角属性 `borderRadius`
+- [ ] 增加`border` 支持
 - [x] 错误异常回调支持
 - [ ] 预缓存模式
 - [ ] 优化 `measureText` 测量模式
